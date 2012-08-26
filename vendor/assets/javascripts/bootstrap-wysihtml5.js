@@ -27,18 +27,19 @@
                                "<a class='btn' data-wysihtml5-command='Indent' title='Indent'><i class='icon-indent-left'></i></a>" +
                            "</div>" +
                        "</li>",
-        "link":        "<li>" +
-                           "<div class='bootstrap-wysihtml5-insert-link-modal modal hide fade'>" +
+        "link":        "<li style='position:relative'>" +
+                           "<div data-wysihtml5-dialog='createLink' style='z-index:100;display:none;position:absolute;left:230px;top:30px;background:white'>" +
                                "<div class='modal-header'>" +
-                                   "<a class='close' data-dismiss='modal'>&times;</a>" +
                                    "<h3>Insert Link</h3>" +
                                "</div>" +
                                "<div class='modal-body'>" +
-                                   "<input value='http://' class='bootstrap-wysihtml5-insert-link-url input-xlarge'>" +
+                                   "<label>URL<input data-wysihtml5-dialog-field='href' value='http://' type='text'></label>" +
+                                   "<label>Title<input data-wysihtml5-dialog-field='title' value='' type='text'></label>" +
+                                   "<label>Target<input data-wysihtml5-dialog-field='target' value='' type='text'></label>" +
                                "</div>" +
                                "<div class='modal-footer'>" +
-                                   "<a href='#' class='btn' data-dismiss='modal'>Cancel</a>" +
-                                   "<a href='#' class='btn btn-primary' data-dismiss='modal'>Insert link</a>" +
+                                   "<a data-wysihtml5-dialog-action='cancel' class='btn'>Cancel</a>" +
+                                   "<a data-wysihtml5-dialog-action='save' class='btn btn-primary'>Insert link</a>" +
                                "</div>" +
                            "</div>" +
                            "<a class='btn' data-wysihtml5-command='createLink' title='Link'><i class='icon-share'></i></a>" +
@@ -132,9 +133,9 @@
 
         createEditor: function(options) {
             options = $.extend(defaultOptions, options || {});
-		    options.toolbar = this.toolbar[0];
+        options.toolbar = this.toolbar[0];
 
-		    var editor = new wysi.Editor(this.el[0], options);
+        var editor = new wysi.Editor(this.el[0], options);
 
             if(options && options.events) {
                 for(var eventName in options.events) {
@@ -171,7 +172,7 @@
                     }
 
                     if(key === "link") {
-                        this.initInsertLink(toolbar);
+                        //this.initInsertLink(toolbar);
                     }
 
                     if(key === "image") {
@@ -236,8 +237,8 @@
             toolbar.find('a[data-wysihtml5-command=insertImage]').click(function() {
                 insertImageModal.modal('show');
                 insertImageModal.on('click.dismiss.modal', '[data-dismiss="modal"]', function(e) {
-					e.stopPropagation();
-				});
+          e.stopPropagation();
+        });
                 return false;
             });
         },
@@ -251,7 +252,7 @@
 
             var insertLink = function() {
                 var url = urlInput.val();
-                urlInput.val(initialValue);
+                //urlInput.val(initialValue);
                 self.editor.composer.commands.exec("createLink", {
                     href: url,
                     target: "_blank",
@@ -270,6 +271,8 @@
             insertButton.click(insertLink);
 
             insertLinkModal.on('shown', function() {
+                if (urlInput.val().indexOf('howtospendit.ft.com')>=0)
+                  urlInput.val(urlInput.val().split("howtospendit.ft.com")[1])
                 urlInput.focus();
             });
 
@@ -280,8 +283,8 @@
             toolbar.find('a[data-wysihtml5-command=createLink]').click(function() {
                 insertLinkModal.modal('show');
                 insertLinkModal.on('click.dismiss.modal', '[data-dismiss="modal"]', function(e) {
-					e.stopPropagation();
-				});
+          e.stopPropagation();
+        });
                 return false;
             });
 
