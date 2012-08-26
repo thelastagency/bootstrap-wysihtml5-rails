@@ -28,7 +28,7 @@
                            "</div>" +
                        "</li>",
         "link":        "<li style='position:relative'>" +
-                           "<div data-wysihtml5-dialog='createLink' style='z-index:100;display:none;position:absolute;left:230px;top:30px;background:white'>" +
+                           "<div data-wysihtml5-dialog='createLink' style='z-index:100;display:none;position:absolute;left:350px;top:30px;background:white'>" +
                                "<div class='modal-header'>" +
                                    "<h3>Insert Link</h3>" +
                                "</div>" +
