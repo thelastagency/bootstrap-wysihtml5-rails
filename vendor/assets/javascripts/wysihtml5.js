@@ -5799,6 +5799,10 @@ wysihtml5.quirks.cleanPastedHTML = (function() {
   var TILDE_ESCAPED = "%7E";
   wysihtml5.quirks.getCorrectInnerHTML = function(element) {
     var innerHTML = element.innerHTML;
+
+    // replace single occurances of non breaking whitespace with a normal whitespace
+    innerHTML = innerHTML.replace(/(\S)&nbsp;(\S)/g, "$1 $2");
+
     if (innerHTML.indexOf(TILDE_ESCAPED) === -1) {
       return innerHTML;
     }
